@@ -22,26 +22,28 @@ public class TestQuestionParNbDeVote
     MaBD bd =  Room.databaseBuilder(mContext, MaBD.class, "BdTestQuestionParNbDeVote").allowMainThreadQueries().build();
     @Test
     public void TestListe() throws ContenuIdentiqueException, IdNonNullException, QuestionTailleMauvaise, QuestionNullException, QuestionIdentiqueException, VoteDoubleException, VoteNullException, IndiceTailleException, QuestionNonTrouvableException {
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         VDQuestion question1 = new VDQuestion("AAAAA");
         VDQuestion question2 = new VDQuestion("JJJJJ");
         VDQuestion question3 = new VDQuestion("kkkkk");
         service.ajoutQuestion(question1);
         service.ajoutQuestion(question2);
         service.ajoutQuestion(question3);
-        VDVote voteKevin = new VDVote(0,"Kevin", 3);
+        VDVote voteKevin = new VDVote(1,"Kevin", 3);
         service.ajoutVote(voteKevin);
-        VDVote voteJessica = new VDVote(1, "Jessica", 5);
+        VDVote voteJessica = new VDVote(2, "Jessica", 5);
         service.ajoutVote(voteJessica);
-        VDVote voteBen = new VDVote(1, "Ben", 5);
+        VDVote voteBen = new VDVote(2, "Ben", 5);
         service.ajoutVote(voteBen);
-        VDVote voteTristan = new VDVote(2, "Tristan", 5);
+        VDVote voteTristan = new VDVote(3, "Tristan", 5);
         service.ajoutVote(voteTristan);
-        VDVote voteJacques = new VDVote(2, "Jacques", 5);
+        VDVote voteJacques = new VDVote(3, "Jacques", 5);
         service.ajoutVote(voteJacques);
-        VDVote votePrestbite = new VDVote(0, "Prestbite", 5);
+        VDVote votePrestbite = new VDVote(1, "Prestbite", 5);
         service.ajoutVote(votePrestbite);
-        VDVote voteRomi = new VDVote(0, "Romi", 5);
+        VDVote voteRomi = new VDVote(1, "Romi", 5);
         service.ajoutVote(voteRomi);
         String resultat = "";
         for (VDQuestion q : service.questionsParNombreVotes())

@@ -10,14 +10,19 @@ import org.fabi.monvotodroid.interfaces.Service;
 import org.fabi.monvotodroid.model.VDQuestion;
 import org.fabi.monvotodroid.model.VDVote;
 import java.util.*;
-public class ServiceImplimentation() implements Service {
+public class ServiceImplimentation implements Service {
     Context context;
-    ServiceImplimentation(Context ctx)
+
+    MaBD bd;
+
+    public ServiceImplimentation(MaBD bd)
     {
-        this.context = ctx;
+        this.bd = bd;
     }
 
-    MaBD bd =  Room.databaseBuilder(context, MaBD.class, "base de données").allowMainThreadQueries().build();
+    //  Room.databaseBuilder(context, MaBD.class, "base de données").allowMainThreadQueries().build();
+
+
     //Implementations
     public void ajoutQuestion(VDQuestion question) throws IdNonNullException, QuestionIdentiqueException, QuestionTailleMauvaise, QuestionNullException, ContenuIdentiqueException {
         if (question == null || question.getContenu() == null)
@@ -42,9 +47,10 @@ public class ServiceImplimentation() implements Service {
 
         }
         //l'id est donné par la méthode en commençant par un id de 0 et ensuite ++
+        Long id = bd.dao().creerVDQuestion(question);
+        question.setId(id.intValue());
 
-
-        bd.dao().toutesLesQuestion().add(question.getId(), question); // je rajoute la question à l'index de son id
+        //bd.dao().toutesLesQuestion().add(question.getId(), question); // je rajoute la question à l'index de son id
 
     }
 
@@ -69,6 +75,7 @@ public class ServiceImplimentation() implements Service {
             throw new QuestionNonTrouvableException();
         }
         VDQuestion question = bd.dao().toutesLesQuestion().get(i);
+
         for (VDVote v : bd.dao().getListeDeVoteParQuestion(question.getId()))
         {
             if (v.getNomVoteur().toLowerCase().compareTo(vote.getNomVoteur().toLowerCase()) == 0)
@@ -77,17 +84,29 @@ public class ServiceImplimentation() implements Service {
             }
         }
 
-        bd.dao().creerVDoteQuestion(bd.dao().toutesLesQuestion().get(i).getId(), vote);
+        bd.dao().creerVDote(vote);
 
 
     }
-
     public List<VDQuestion> questionsParNombreVotes()
     {
         List<VDQuestion> listeQuestionCopie = bd.dao().toutesLesQuestion();
-
+        Collections.sort(listeQuestionCopie, new Comparator<VDQuestion>() {
+            @Override
+            public int compare(VDQuestion o1, VDQuestion o2) {
+                int nb1 = nombreVotesPour(o1);
+                int nb2 = nombreVotesPour(o2);
+                if (nb1 > nb2) return -1;
+                return 0;
+            }
+        });
         return listeQuestionCopie;
     }
+
+    private int nombreVotesPour(VDQuestion o1) {
+        return bd.dao().nombredeVote(o1.getId()).size();
+    }
+
     public Map<Integer, Integer> distributionPour(VDQuestion question) {
         Map<Integer, Integer> distributionMap = new HashMap<Integer, Integer>();
         Integer noteMax = 5;

@@ -3,8 +3,10 @@ package org.fabi.monvotodroid.fabi.TestBD;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
+import org.fabi.monvotodroid.dao.MaBD;
 import org.fabi.monvotodroid.exceptions.*;
 import org.fabi.monvotodroid.impl.ServiceImplimentation;
 import org.fabi.monvotodroid.interfaces.Service;
@@ -22,22 +24,23 @@ public class TestDistribution
     @Test
     //Je créé des votes avec différents indices pour ensuite calculer la distribution à partir d'une question
     public void TestDistribution() throws VoteDoubleException, VoteNullException, IndiceTailleException, QuestionNonTrouvableException, ContenuIdentiqueException, IdNonNullException, QuestionTailleMauvaise, QuestionNullException, QuestionIdentiqueException {
-        
 
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         VDQuestion question = new VDQuestion("Quelle est la question?");
         service.ajoutQuestion(question);
-        VDVote vote1 = new VDVote(0,"Maurice", 2);
+        VDVote vote1 = new VDVote(1,"Maurice", 2);
         service.ajoutVote(vote1);
-        VDVote vote2 = new VDVote(0,"Pedro", 4);
+        VDVote vote2 = new VDVote(1,"Pedro", 4);
         service.ajoutVote(vote2);
-        VDVote vote3 = new VDVote(0,"Caroline", 4);
+        VDVote vote3 = new VDVote(1,"Caroline", 4);
         service.ajoutVote(vote3);
-        VDVote vote4 = new VDVote(0,"Bastien", 1);
+        VDVote vote4 = new VDVote(1,"Bastien", 1);
         service.ajoutVote(vote4);
-        VDVote vote5 = new VDVote(0,"Chantal", 4);
+        VDVote vote5 = new VDVote(1,"Chantal", 4);
         service.ajoutVote(vote5);
-        VDVote vote6 = new VDVote(0,"Corneille", 2);
+        VDVote vote6 = new VDVote(1,"Corneille", 2);
         service.ajoutVote(vote6);
 
         Map<Integer, Integer> map = service.distributionPour(question);

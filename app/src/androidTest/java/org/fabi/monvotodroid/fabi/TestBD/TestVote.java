@@ -22,23 +22,31 @@ public class TestVote
     //TESTS POUR VDVOTE
     @Test(expected = VoteNullException.class)
     public void VoteNull() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException {
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         service.ajoutVote(null);
     }
     @Test(expected = IndiceTailleException.class)
     public void IndiceTailleTropCourt() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException {
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         VDVote vote = new VDVote(3,"allllalo",-1);
         service.ajoutVote(vote);
     }
     @Test(expected = IndiceTailleException.class)
     public void IndiceTailleTropLong() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException {
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         service.ajoutVote(new VDVote(3,"allllalo",6));
     }
     @Test(expected = VoteDoubleException.class)
     public void DoubleVote() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException, ContenuIdentiqueException, IdNonNullException, QuestionTailleMauvaise, QuestionNullException, QuestionIdentiqueException {
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         VDQuestion question = new VDQuestion("contenu");
         service.ajoutQuestion(question);
         VDVote voteMaude = new VDVote(question.getId(), "Maude",3);
@@ -48,14 +56,18 @@ public class TestVote
     }
     @Test(expected = QuestionNonTrouvableException.class)
     public void QuestionNonTrouvable() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException, ContenuIdentiqueException, IdNonNullException, QuestionTailleMauvaise, QuestionNullException, QuestionIdentiqueException { //Le vote n'est pas rattaché à une question!
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         service.ajoutQuestion(new VDQuestion("TESTQUESTION"));
         VDVote vote = new VDVote(2,"maude",3); //QUESITON ID : pour voir si il va trouver la question avec l'id 2
         service.ajoutVote(vote);
     }
     @Test
     public void AjouVoteAQuestion() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException, ContenuIdentiqueException, IdNonNullException, QuestionTailleMauvaise, QuestionNullException, QuestionIdentiqueException { //Le vote n'est pas rattaché à une question!
-        Service service = new ServiceImplimentation(this.mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
+        Service service = new ServiceImplimentation(bd);
         VDQuestion question = new VDQuestion("TESTQUESTION");
         service.ajoutQuestion(question);
         VDVote vote = new VDVote(question.getId(), "maude",3);

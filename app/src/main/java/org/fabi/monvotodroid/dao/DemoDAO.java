@@ -22,14 +22,17 @@ public abstract class DemoDAO
     @Insert
     public abstract Long creerVDQuestion(VDQuestion question);
     //GET ALL VOTES FOR QUESTION
-    @Query("SELECT * FROM VDQuestion WHERE id = :idparent")
+    @Query("SELECT * FROM VDVote WHERE questionId = :idparent")
     public abstract List<VDVote> getListeDeVoteParQuestion(Integer idparent);
     //Creer Question
     @Insert
     public abstract Long creerVDote(VDVote vote);
-    //questionsParNombreVotes
-    @Query("SELECT * FROM VDQuestion ORDER BY ")
-    public abstract List<VDQuestion> questionsParNombreVotes(Integer idparent);
+
+    //nombreVotesQuestions
+    @Query("SELECT * FROM VDVote WHERE questionId = :idparent")
+    public abstract List<VDVote> nombredeVote(Integer idparent);
+
+
 
 
 
