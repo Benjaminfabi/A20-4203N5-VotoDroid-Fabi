@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 import org.fabi.monvotodroid.model.VDQuestion;
 import org.fabi.monvotodroid.model.VDVote;
 
-@Database(entities = {VDQuestion.class, VDVote.class}, version = 1)
+@Database(entities = {VDQuestion.class, VDVote.class}, version = 1, exportSchema = true)
 public abstract class MaBD extends RoomDatabase {
     public abstract DemoDAO dao();
 }
