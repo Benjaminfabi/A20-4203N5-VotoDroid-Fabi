@@ -30,6 +30,7 @@ public class VDQuestionAdapteur extends RecyclerView.Adapter<VDQuestionAdapteur.
     public interface OnItemClickListener
     {
         void onItemClick(int position);
+        void onStatClick(int position);
     }
     public void setOnItemClickListener(OnItemClickListener listener)
     {
@@ -56,6 +57,20 @@ public class VDQuestionAdapteur extends RecyclerView.Adapter<VDQuestionAdapteur.
                     }
                 }
             });
+            imgStats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                    {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION);
+                        {
+                            listener.onStatClick(position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 

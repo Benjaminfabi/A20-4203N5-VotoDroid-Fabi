@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".CreerVoteActivity">
         </activity>
+        <activity android:name=".StatistiqueActivity">
+        </activity>
     </application>
 
 </manifest>

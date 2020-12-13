@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         btnAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_LONG).show();
+
                 Intent i = new Intent(MainActivity.this, CreerQuestionActivity.class);
                 startActivity(i);
             }

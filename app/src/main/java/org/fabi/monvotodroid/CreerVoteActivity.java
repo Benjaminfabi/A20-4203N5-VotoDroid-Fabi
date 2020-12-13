@@ -68,7 +68,7 @@ public class CreerVoteActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Erreur : Le vote est null", Toast.LENGTH_LONG).show();
                         return;
                     } catch (IndiceTailleException e) {
-                        Toast.makeText(getApplicationContext(), "Erreur : L'indice fixé doit être entre 1 et 5", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Erreur : L'indice fixé doit être entre 0 et 5", Toast.LENGTH_LONG).show();
                         return;
                     } catch (VoteDoubleException e) {
                         Toast.makeText(getApplicationContext(), "Erreur : Ce vote existe déjà", Toast.LENGTH_LONG).show();

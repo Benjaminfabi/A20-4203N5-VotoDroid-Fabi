@@ -6,12 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import org.fabi.monvotodroid.dao.MaBD;
@@ -22,8 +24,10 @@ import java.util.List;
 public class ListeQuestionActivity extends AppCompatActivity
 {
     VDQuestionAdapteur adapteur;
+    MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.liste_question_activity);
         this.initRecycler();
@@ -73,6 +77,22 @@ public class ListeQuestionActivity extends AppCompatActivity
                 Intent i = new Intent(ListeQuestionActivity.this, CreerVoteActivity.class);
                 i.putExtra("Contenu", adapteur.list.get(position).getText());
                 startActivity(i);
+            }
+
+            @Override
+            public void onStatClick(int position) {
+                if (bd.dao().getListeDeVoteParQuestion(bd.dao().QuestionParContenu(adapteur.list.get(position).getText()).getId()).isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "La question n'a pas de votes", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else
+                {
+                    Intent i = new Intent(ListeQuestionActivity.this, StatistiqueActivity.class);
+                    i.putExtra("Contenu", adapteur.list.get(position).getText());
+                    startActivity(i);
+                }
+
             }
         });
     }
