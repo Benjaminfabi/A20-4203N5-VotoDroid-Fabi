@@ -25,18 +25,18 @@ public class VDVote
     private Integer questionId;
     @ColumnInfo
     private Integer indice;
+    public VDVote(Integer QuestionId, String NomVoteur, Integer Indice)
+    {
+        setQuestionId(QuestionId);
+        setNomVoteur(NomVoteur);
+        setIndice(Indice);
+    }
     public VDVote()
     {
 
     }
 
-    public VDVote(Integer questionId, String nomVoteur, Integer indice)
-    {
-        setIndice(indice);
-        setNomVoteur(nomVoteur);
-        setQuestionId(questionId);
 
-    }
 
     public void setId(Integer id) {
         this.id = id;

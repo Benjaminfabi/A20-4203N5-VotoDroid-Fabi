@@ -83,8 +83,9 @@ public class ServiceImplimentation implements Service {
                 throw new VoteDoubleException();
             }
         }
+        Long id = bd.dao().creerVDVote(vote);
+        vote.setId(id.intValue());
 
-        bd.dao().creerVDote(vote);
 
 
     }

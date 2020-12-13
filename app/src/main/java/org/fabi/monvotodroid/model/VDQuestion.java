@@ -1,5 +1,7 @@
 package org.fabi.monvotodroid.model;
 
+import android.service.controls.templates.ControlTemplate;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -36,12 +38,11 @@ public class VDQuestion {
     public VDQuestion() {
 
     }
-
-    public VDQuestion(String contenu) {
-        setContenu(contenu);
-
-
+    public VDQuestion(String Contenu) {
+    setContenu(Contenu);
     }
+
+
 
     @Override
     public boolean equals(Object o) {
