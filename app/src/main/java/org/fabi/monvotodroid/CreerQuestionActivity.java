@@ -73,8 +73,6 @@ public class CreerQuestionActivity extends AppCompatActivity
                     }
                     i.putStringArrayListExtra("liste", (ArrayList<String>) listeDeContenu);
                     startActivity(i);
-
-
                 }
             }
         });

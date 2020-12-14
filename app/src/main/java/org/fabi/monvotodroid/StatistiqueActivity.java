@@ -35,8 +35,6 @@ public class StatistiqueActivity extends AppCompatActivity
     BarChart chart;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistique_activity);
         MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
@@ -47,8 +45,6 @@ public class StatistiqueActivity extends AppCompatActivity
         //Titre
         TextView txtTitle = findViewById(R.id.questionStat);
         txtTitle.setText(question.getContenu());
-
-
         //Moyenne
         TextView txtMoyenne = findViewById(R.id.txtMyenneValue);
         double d = new Double(0);
@@ -59,8 +55,6 @@ public class StatistiqueActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "La question pas de votes", Toast.LENGTH_LONG).show();
         }
         txtMoyenne.setText(new DecimalFormat("##.##").format(d));
-
-
         //Écart type
         TextView txtEcart = findViewById(R.id.txtEcartValue);
         double ecart = new Double(0);
@@ -70,25 +64,17 @@ public class StatistiqueActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "La question pas de votes", Toast.LENGTH_LONG).show();
         }
         txtEcart.setText(new DecimalFormat("##.##").format(ecart));
-
-
         //Chart
-
         chart = findViewById(R.id.barChart);
-
-
-
         chart.setMaxVisibleValueCount(6);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
-
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1); // only intervals of 1 day
         xAxis.setLabelCount(7);
         xAxis.setValueFormatter(new DefaultAxisValueFormatter(0));
-
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setLabelCount(8, false);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
@@ -98,22 +84,13 @@ public class StatistiqueActivity extends AppCompatActivity
         leftAxis.setValueFormatter(new DefaultAxisValueFormatter(0));
         chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
-
-
-
-
         setData(service.distributionPour(question));
     }
-
     private void setData(Map<Integer, Integer> datas) {
-
         ArrayList<BarEntry> values = new ArrayList<>();
-
-        /* Every bar entry is a bar in the graphic */
         for (Map.Entry<Integer, Integer> key : datas.entrySet()){
             values.add(new BarEntry(key.getKey() , key.getValue()));
         }
-
         BarDataSet set1;
         if (chart.getData() != null &&
                 chart.getData().getDataSetCount() > 0) {
@@ -123,20 +100,13 @@ public class StatistiqueActivity extends AppCompatActivity
             chart.notifyDataSetChanged();
         } else {
             set1 = new BarDataSet(values, "Distribution de vote");
-
             set1.setDrawIcons(false);
-
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
-
             BarData data = new BarData(dataSets);
             data.setValueTextSize(10f);
             data.setBarWidth(.9f);
             chart.setData(data);
         }
-
-
-
-
     }
 }

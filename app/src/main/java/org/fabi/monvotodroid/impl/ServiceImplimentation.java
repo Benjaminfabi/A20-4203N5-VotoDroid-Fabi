@@ -59,7 +59,7 @@ public class ServiceImplimentation implements Service {
         {
             throw new VoteNullException();
         }
-        if (vote.getIndice() > 5 || vote.getIndice() < -1)
+        if (vote.getIndice() > 5 || vote.getIndice() < 0)
         {
             throw new IndiceTailleException();
         }

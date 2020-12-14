@@ -19,5 +19,4 @@ public int getImageResource()
     {
         return mText;
     }
-
 }

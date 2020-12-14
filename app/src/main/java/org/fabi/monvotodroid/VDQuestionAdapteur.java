@@ -23,8 +23,6 @@ import java.util.List;
 
 public class VDQuestionAdapteur extends RecyclerView.Adapter<VDQuestionAdapteur.MyViewHolder>
 {
-
-
     public List<RecyclerItem> list;
     private OnItemClickListener mListener;
     public interface OnItemClickListener
@@ -78,7 +76,6 @@ public class VDQuestionAdapteur extends RecyclerView.Adapter<VDQuestionAdapteur.
     public VDQuestionAdapteur() {
         list = new ArrayList<RecyclerItem>();
     }
-
     // Create new views (invoked by the layout manager)
     @Override
     public VDQuestionAdapteur.MyViewHolder onCreateViewHolder(ViewGroup parent,
@@ -89,7 +86,6 @@ public class VDQuestionAdapteur extends RecyclerView.Adapter<VDQuestionAdapteur.
         MyViewHolder vh = new MyViewHolder(v, mListener);
         return vh;
     }
-
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
@@ -99,10 +95,7 @@ public class VDQuestionAdapteur extends RecyclerView.Adapter<VDQuestionAdapteur.
         String questionCourante = itemCourant.getText();
         holder.tvContenu.setText(questionCourante);
         holder.imgStats.setImageResource(itemCourant.getImageResource());
-
-
     }
-
     // renvoie la taille de la liste
     @Override
     public int getItemCount() {
