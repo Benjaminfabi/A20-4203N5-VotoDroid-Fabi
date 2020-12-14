@@ -18,11 +18,9 @@ public class MainActivity extends AppCompatActivity {
         btnAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(MainActivity.this, CreerQuestionActivity.class);
                 startActivity(i);
             }
         });
-
     }
 }

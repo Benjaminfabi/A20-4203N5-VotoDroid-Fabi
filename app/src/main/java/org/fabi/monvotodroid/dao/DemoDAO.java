@@ -33,11 +33,13 @@ public abstract class DemoDAO
     //nombreVotesQuestions
     @Query("SELECT * FROM VDVote WHERE questionId = :idparent")
     public abstract List<VDVote> nombredeVote(Integer idparent);
-
+    //Obtenir La question à partir de son contenu
     @Query("SELECT * FROM VDQuestion WHERE Contenu = :contenu")
     public abstract VDQuestion QuestionParContenu(String contenu);
+    //Supprime toute les questions qui ont le id passé en paramètre
     @Query("DELETE FROM vdquestion WHERE id = :id")
-    public abstract void SupprimeQuestionsSansVotes(Integer id);
+    public abstract void SupprimeQuestions(Integer id);
+
     @Query("DELETE FROM VDVote")
     public abstract void SupprimeVotes();
 

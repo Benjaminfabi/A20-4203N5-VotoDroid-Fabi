@@ -28,11 +28,14 @@ public class TestVote
         service.ajoutVote(null);
     }
     @Test(expected = IndiceTailleException.class)
-    public void IndiceTailleTropCourt() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException {
+    public void IndiceTailleTropCourt() throws VoteNullException, IndiceTailleException, VoteDoubleException, QuestionNonTrouvableException, ContenuIdentiqueException, IdNonNullException, QuestionTailleMauvaise, QuestionNullException, QuestionIdentiqueException {
+        VDQuestion question = new VDQuestion("jaimelesvaches");
+
         Context context = ApplicationProvider.getApplicationContext();
         MaBD bd = Room.inMemoryDatabaseBuilder(context, MaBD.class).build();
         Service service = new ServiceImplimentation(bd);
-        VDVote vote = new VDVote(3,"allllalo",-1);
+        service.ajoutQuestion(question);
+        VDVote vote = new VDVote(1,"allllalo",-1);
         service.ajoutVote(vote);
     }
     @Test(expected = IndiceTailleException.class)

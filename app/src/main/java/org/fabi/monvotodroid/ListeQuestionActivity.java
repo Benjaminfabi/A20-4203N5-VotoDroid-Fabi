@@ -50,7 +50,6 @@ public class ListeQuestionActivity extends AppCompatActivity
             }
         });
     }
-
     private void remplirRecycler()
     {
         List<String> listeDeContenu = new ArrayList<>();
@@ -61,23 +60,16 @@ public class ListeQuestionActivity extends AppCompatActivity
             recyclerItem = new RecyclerItem(R.drawable.ic_statistique, string);
             adapteur.list.add(recyclerItem);
         }
-
-        
         adapteur.notifyDataSetChanged();
     }
-
-
     private void initRecycler()
     {
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
-
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-
         adapteur = new VDQuestionAdapteur();
         recyclerView.setAdapter(adapteur);
         adapteur.setOnItemClickListener(new VDQuestionAdapteur.OnItemClickListener() {
@@ -87,7 +79,6 @@ public class ListeQuestionActivity extends AppCompatActivity
                 i.putExtra("Contenu", adapteur.list.get(position).getText());
                 startActivity(i);
             }
-
              @Override
             public void onStatClick(int position) {
                  MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
@@ -105,17 +96,15 @@ public class ListeQuestionActivity extends AppCompatActivity
 
             }
         });
-
-
-
     }
+
+    //MENU D'OPTION
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
@@ -126,7 +115,7 @@ public class ListeQuestionActivity extends AppCompatActivity
                  ) {
                 if (bd.dao().getListeDeVoteParQuestion(question.getId()).isEmpty())
                 {
-                    bd.dao().SupprimeQuestionsSansVotes(question.getId());
+                    bd.dao().SupprimeQuestions(question.getId());
                 }
             }
             //Reload la page
@@ -141,9 +130,6 @@ public class ListeQuestionActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(),"Questions supprimez",Toast.LENGTH_SHORT).show();
             return true;
         }
-
-
-
         if (id == R.id.action_supVotes) {
             bd.dao().SupprimeVotes();
             //Reload la page

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:label="VotoDroid"
     tools:context=".MainActivity">
-
     <Button
         android:id="@+id/btnAjouterQuestion"
         android:layout_width="wrap_content"

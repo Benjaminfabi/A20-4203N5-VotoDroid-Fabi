@@ -47,10 +47,7 @@ public class CreerVoteActivity extends AppCompatActivity {
                 vote.setIndice((int)rating);
             }
         });
-
-
         EditText editText = (EditText) findViewById(R.id.textNomVoteur);
-
         Button button = findViewById(R.id.btnAjouterVote);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

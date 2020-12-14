@@ -4,7 +4,6 @@
     android:layout_margin="25dp"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-
 <TextView
         android:layout_margin="8dp"
         android:id="@+id/contenuTextView"
@@ -13,9 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:textSize="15dp">
-
 </TextView>
-
     <ImageView
         android:id="@+id/iconStats"
         android:layout_width="2dp"
@@ -25,12 +22,7 @@
         android:background="#C3C3C3"
         android:src="@drawable/ic_stats"
         app:srcCompat="@drawable/ic_statistique">
-
-
     </ImageView>
-
-
-
 </LinearLayout>
 
 
