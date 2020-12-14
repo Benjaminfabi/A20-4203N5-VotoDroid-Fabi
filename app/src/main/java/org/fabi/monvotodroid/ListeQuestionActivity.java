@@ -17,14 +17,21 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import org.fabi.monvotodroid.dao.MaBD;
+import org.fabi.monvotodroid.impl.ServiceImplimentation;
+import org.fabi.monvotodroid.interfaces.Service;
+import org.fabi.monvotodroid.model.VDQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 public class ListeQuestionActivity extends AppCompatActivity
 {
     VDQuestionAdapteur adapteur;
-    MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -32,6 +39,8 @@ public class ListeQuestionActivity extends AppCompatActivity
         setContentView(R.layout.liste_question_activity);
         this.initRecycler();
         this.remplirRecycler();
+        MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
+        Service service = new ServiceImplimentation(bd);
         Button button = findViewById(R.id.btnAjouterQuestion2);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,21 +88,77 @@ public class ListeQuestionActivity extends AppCompatActivity
                 startActivity(i);
             }
 
-            @Override
+             @Override
             public void onStatClick(int position) {
+                 MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
                 if (bd.dao().getListeDeVoteParQuestion(bd.dao().QuestionParContenu(adapteur.list.get(position).getText()).getId()).isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(), "La question n'a pas de votes", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                else
-                {
+                   Toast.makeText(getApplicationContext(), "La question n'a pas de votes", Toast.LENGTH_LONG).show();
+                   return;
+            }
+               else
+               {
                     Intent i = new Intent(ListeQuestionActivity.this, StatistiqueActivity.class);
-                    i.putExtra("Contenu", adapteur.list.get(position).getText());
+                   i.putExtra("Contenu", adapteur.list.get(position).getText());
                     startActivity(i);
-                }
+               }
 
             }
         });
+
+
+
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        MaBD bd = Room.databaseBuilder(getApplicationContext(), MaBD.class,"bdVotoDroid").allowMainThreadQueries().build();
+        Service service = new ServiceImplimentation(bd);
+        int id = item.getItemId();
+        if (id == R.id.action_supQuestions) {
+            for (VDQuestion question : bd.dao().toutesLesQuestion()
+                 ) {
+                if (bd.dao().getListeDeVoteParQuestion(question.getId()).isEmpty())
+                {
+                    bd.dao().SupprimeQuestionsSansVotes(question.getId());
+                }
+            }
+            //Reload la page
+            Intent i = new Intent(ListeQuestionActivity.this, ListeQuestionActivity.class);
+            List<String> listeDeContenu = new ArrayList<>();
+            for (VDQuestion questions :service.questionsParNombreVotes())
+            {
+                listeDeContenu.add(questions.getContenu());
+            }
+            i.putStringArrayListExtra("liste", (ArrayList<String>) listeDeContenu);
+            startActivity(i);
+            Toast.makeText(getApplicationContext(),"Questions supprimez",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+
+
+        if (id == R.id.action_supVotes) {
+            bd.dao().SupprimeVotes();
+            //Reload la page
+            Intent i = new Intent(ListeQuestionActivity.this, ListeQuestionActivity.class);
+            List<String> listeDeContenu = new ArrayList<>();
+            for (VDQuestion questions :service.questionsParNombreVotes())
+            {
+                listeDeContenu.add(questions.getContenu());
+            }
+            i.putStringArrayListExtra("liste", (ArrayList<String>) listeDeContenu);
+            startActivity(i);
+            Toast.makeText(getApplicationContext(),"Votes supprimez",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

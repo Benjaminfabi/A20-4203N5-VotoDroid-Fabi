@@ -30,11 +30,11 @@ public class TestDistribution
         Service service = new ServiceImplimentation(bd);
         VDQuestion question = new VDQuestion("Quelle est la question?");
         service.ajoutQuestion(question);
-        VDVote vote1 = new VDVote(1,"Maurice", 2);
+        VDVote vote1 = new VDVote(1,"Maurice", 0);
         service.ajoutVote(vote1);
         VDVote vote2 = new VDVote(1,"Pedro", 4);
         service.ajoutVote(vote2);
-        VDVote vote3 = new VDVote(1,"Caroline", 4);
+        VDVote vote3 = new VDVote(1,"Caroline", 5);
         service.ajoutVote(vote3);
         VDVote vote4 = new VDVote(1,"Bastien", 1);
         service.ajoutVote(vote4);
@@ -45,7 +45,7 @@ public class TestDistribution
 
         Map<Integer, Integer> map = service.distributionPour(question);
 
-        Assert.assertEquals("1 pour 1/5 ; 2 pour 2/5 ; 0 pour 3/5 ; 3 pour 4/5 ; 0 pour 5/5 ; ", map.get(1) + " pour 1/5 ; " + map.get(2) + " pour 2/5 ; " + map.get(3) + " pour 3/5 ; " + map.get(4) + " pour 4/5 ; " + map.get(5) + " pour 5/5 ; ");
+        Assert.assertEquals("1 pour 0/5 ; 1 pour 1/5 ; 1 pour 2/5 ; 0 pour 3/5 ; 2 pour 4/5 ; 1 pour 5/5 ; ", map.get(0) + " pour 0/5 ; " + map.get(1) + " pour 1/5 ; " + map.get(2) + " pour 2/5 ; " + map.get(3) + " pour 3/5 ; " + map.get(4) + " pour 4/5 ; " + map.get(5) + " pour 5/5 ; ");
 
     }
 

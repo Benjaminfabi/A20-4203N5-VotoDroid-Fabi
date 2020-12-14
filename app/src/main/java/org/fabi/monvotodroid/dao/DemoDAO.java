@@ -1,6 +1,8 @@
 package org.fabi.monvotodroid.dao;
 
 
+import android.content.Intent;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -34,6 +36,10 @@ public abstract class DemoDAO
 
     @Query("SELECT * FROM VDQuestion WHERE Contenu = :contenu")
     public abstract VDQuestion QuestionParContenu(String contenu);
+    @Query("DELETE FROM vdquestion WHERE id = :id")
+    public abstract void SupprimeQuestionsSansVotes(Integer id);
+    @Query("DELETE FROM VDVote")
+    public abstract void SupprimeVotes();
 
 
 

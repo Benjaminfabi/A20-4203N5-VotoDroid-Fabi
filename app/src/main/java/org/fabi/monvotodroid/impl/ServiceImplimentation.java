@@ -20,7 +20,7 @@ public class ServiceImplimentation implements Service {
         this.bd = bd;
     }
 
-    //  Room.databaseBuilder(context, MaBD.class, "base de données").allowMainThreadQueries().build();
+
 
 
     //Implementations
@@ -112,17 +112,18 @@ public class ServiceImplimentation implements Service {
         Map<Integer, Integer> distributionMap = new HashMap<Integer, Integer>();
         Integer noteMax = 5;
 
-        Integer[] tab = new Integer[5];
+        Integer[] tab = new Integer[6];
         tab[0] = 0;
         tab[1] = 0;
         tab[2] = 0;
         tab[3] = 0;
         tab[4] = 0;
+        tab[5] = 0;
         for (VDVote v : bd.dao().getListeDeVoteParQuestion(question.getId())) {
-            tab[v.getIndice() - 1]++;
+            tab[v.getIndice()]++;
         }
-        for (int i = 0; i < noteMax; i++) {
-            distributionMap.put(i+1, tab[i]); //Ajouter les donnés dans le HashMap
+        for (int i = 0; i <= noteMax; i++) {
+            distributionMap.put(i, tab[i]); //Ajouter les donnés dans le HashMap
         }
         return distributionMap;
     }
